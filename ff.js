@@ -67,7 +67,7 @@ if (!quizUrl) {
                             }
                         });
                     });
-                    setTimeout(fetchAnswers, 2000);
+                    setTimeout(fetchAnswers, 5000);
                 } else {
                     if (data.message) {
                         console.log("Error message from API:", data.message);
