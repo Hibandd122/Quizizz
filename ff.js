@@ -11,6 +11,13 @@ if (!quizUrl) {
     function fetchAnswers() {
         console.clear();
 
+        // Kiểm tra sự hiện diện của nút "Play again"
+        const playAgainButton = document.querySelector('button[data-cy="primary-action-btn"]');
+        if (playAgainButton) {
+            console.log("Nút 'Play again' đã xuất hiện. Dừng mã.");
+            return; // Dừng mã khi thấy nút này
+        }
+
         fetch(apiUrl + `?pin=${encodeURIComponent(quizUrl)}`)
             .then(response => response.json())
             .then(data => {
