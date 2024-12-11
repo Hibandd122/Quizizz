@@ -4,6 +4,7 @@ if (!quizUrl) {
     console.log("Quiz URL is required. Please reload the page and enter the URL.");
 } else {
     let questionsAnswered = 0;
+    
     function fetchAnswers() {
         console.clear();
         const playAgainButton = document.querySelector('button[data-cy="primary-action-btn"]');
@@ -11,6 +12,7 @@ if (!quizUrl) {
             console.log("Nút 'Play again' đã xuất hiện. Dừng mã.");
             return;
         }
+
         fetch(apiUrl + `?pin=${encodeURIComponent(quizUrl)}`)
             .then(response => response.json())
             .then(data => {
@@ -24,6 +26,7 @@ if (!quizUrl) {
                         const imageElements = document.querySelectorAll('img[data-testid="question-container-image"]');
                         const divQuestionElements = document.querySelectorAll('[data-v-94904112]');
                         let questionMatched = false;
+
                         questionElements.forEach(questionElement => {
                             const pageQuestionText = questionElement.innerText.trim();
                             if (pageQuestionText === questionText || pageQuestionText.includes(questionText)) {
@@ -32,6 +35,7 @@ if (!quizUrl) {
                                 highlightAndClickOption(answerText);
                             }
                         });
+
                         if (!questionMatched) {
                             imageElements.forEach(imageElement => {
                                 const pageImageUrl = (imageElement.src || "").split('?')[0];
@@ -41,6 +45,7 @@ if (!quizUrl) {
                                 }
                             });
                         }
+
                         if (!questionMatched) {
                             divQuestionElements.forEach(divElement => {
                                 const strongText = divElement.querySelector('p strong')?.innerText.trim();
@@ -65,40 +70,19 @@ if (!quizUrl) {
             .catch(error => {
                 console.error(`Error fetching data: ${error}`);
             });
+
         setTimeout(fetchAnswers, 10000);
     }
+
     function highlightAndClickOption(answerText) {
         const options = document.querySelectorAll('.option');
         let found = false;
+
         options.forEach(option => {
             const optionText = option.querySelector('#optionText p').innerText.trim();
             if (optionText === answerText) {
-                const optionTextElement = option.querySelector('#optionText p');
-                if (optionTextElement) {
-                    optionTextElement.style.fontWeight = "bold";
-                    optionTextElement.style.backgroundColor = "#ffcc00";
-                    optionTextElement.style.color = "#ffffff";
-                }
-
                 if (option && option.click) {
                     setTimeout(() => {
                         option.click();
                         questionsAnswered++;
                     }, 500);
-                }
-
-                found = true;
-            }
-        });
-        if (!found) {
-            const optionTextElements = document.querySelectorAll('.option p');
-            optionTextElements.forEach(optionTextElement => {
-                optionTextElement.style.fontWeight = "bold";
-                optionTextElement.style.backgroundColor = "#ffcc00";
-                optionTextElement.style.color = "#ffffff";
-            });
-            console.log(`No correct answer found. Highlighting incorrect options.`);
-        }
-    }
-    fetchAnswers();
-}
