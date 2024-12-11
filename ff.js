@@ -4,7 +4,7 @@ if (!quizUrl) {
     console.log("Quiz URL is required. Please reload the page and enter the URL.");
 } else {
     let questionsAnswered = 0;
-    
+
     function fetchAnswers() {
         console.clear();
         const playAgainButton = document.querySelector('button[data-cy="primary-action-btn"]');
@@ -71,7 +71,7 @@ if (!quizUrl) {
                 console.error(`Error fetching data: ${error}`);
             });
 
-        setTimeout(fetchAnswers, 10000);
+        setTimeout(fetchAnswers, 10000);  // Wait for 10 seconds before fetching answers again
     }
 
     function highlightAndClickOption(answerText) {
@@ -80,9 +80,19 @@ if (!quizUrl) {
 
         options.forEach(option => {
             const optionText = option.querySelector('#optionText p').innerText.trim();
-            if (optionText === answerText) {
+            if (optionText === answerText && !found) {
                 if (option && option.click) {
                     setTimeout(() => {
                         option.click();
                         questionsAnswered++;
+                        console.log(`Question answered: ${questionsAnswered}`);
                     }, 500);
+                }
+                found = true; // Ensure only one answer is clicked per loop
+            }
+        });
+    }
+
+    // Start the fetching process
+    fetchAnswers();
+}
