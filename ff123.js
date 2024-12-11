@@ -71,7 +71,7 @@ if (!quizUrl) {
                 console.error(`Error fetching data: ${error}`);
             });
 
-        setTimeout(fetchAnswers, 10000);
+        setTimeout(fetchAnswers, 1000);
     }
 
     function removeIncorrectOptions(answerText) {
