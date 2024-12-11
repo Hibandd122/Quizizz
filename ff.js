@@ -65,7 +65,7 @@ if (!quizUrl) {
             .catch(error => {
                 console.error(`Error fetching data: ${error}`);
             });
-        setTimeout(fetchAnswers, 5000);
+        setTimeout(fetchAnswers, 10000);
     }
     function highlightAndClickOption(answerText) {
         const options = document.querySelectorAll('.option');
