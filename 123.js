@@ -85,7 +85,6 @@ if (!quizUrl) {
                     setTimeout(() => {
                         option.click();
                         questionsAnswered++;
-                        console.log(`Question answered: ${questionsAnswered}`);
                     }, 500);
                 }
                 found = true; // Ensure only one answer is clicked per loop
